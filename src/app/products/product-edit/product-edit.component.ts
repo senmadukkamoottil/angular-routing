@@ -25,7 +25,9 @@ export class ProductEditComponent implements OnInit {
     this.route.paramMap.subscribe(param => {
       this.productId = param['params'].id;
     });
-    this.getProduct(this.productId);
+    if (this.productId === 0) {
+      this.getProduct(this.productId);
+    }
   }
 
   getProduct(id: number): void {
