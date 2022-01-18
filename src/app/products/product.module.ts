@@ -13,14 +13,19 @@ import { RouterModule } from '@angular/router';
   imports: [
     SharedModule,
     RouterModule.forChild([
-      {path: 'products', component: ProductListComponent},
-      {path: 'products/:id', component: ProductDetailComponent},
       {
-        path: 'products/:id/edit', 
-        component: ProductEditComponent,
+        path: 'products', 
         children: [
-          {path: 'info', component: ProductEditInfoComponent},
-          {path: 'tags', component: ProductEditTagsComponent}
+          {path: ':id', component: ProductDetailComponent},
+          {
+            path: ':id/edit', 
+            component: ProductEditComponent,
+            children: [
+              {path: 'info', component: ProductEditInfoComponent},
+              {path: 'tags', component: ProductEditTagsComponent}
+            ]
+          },
+          {path: '', component: ProductListComponent},
         ]
       }
     ])
