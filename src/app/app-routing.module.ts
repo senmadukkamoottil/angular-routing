@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { WelcomeComponent } from './home/welcome.component';
 import { MessageComponent } from './messages/message.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { AuthGuardGuard } from './user/auth-guard.guard';
 
 
 
@@ -12,7 +13,15 @@ import { PageNotFoundComponent } from './page-not-found.component';
   imports: [
     CommonModule,
     RouterModule.forRoot([
-      {path: 'welcome', component: WelcomeComponent},
+      {
+        path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuardGuard]
+      },
+      {
+        path: 'products',
+        canActivate: [AuthGuardGuard],
+        loadChildren: () =>
+          import('../app/products/product.module').then(m=> m.ProductModule)
+      },
       {path: 'message', component: MessageComponent},
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
       {path: '**', component: PageNotFoundComponent}
